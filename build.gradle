@@ -1,0 +1,34 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Hỗ trợ các lớp Servlet
+    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
+    // Hỗ trợ WebApplicationInitializer
+    compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.4.RELEASE'
+    // Hỗ trợ JPA
+    compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.4.2'
+    // Hỗ trợ Hibernate - Annotation
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.25.Final'
+    // Hỗ trợ Hibernate - Validator
+    compile group: 'org.hibernate', name: 'hibernate-validator', version: '6.0.22.Final'
+    // Hỗ trợ Thymeleaf
+    compile group: 'org.thymeleaf', name: 'thymeleaf-spring4', version: '3.0.11.RELEASE'
+    // Hỗ trợ MySQL
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.22'
+    // Hỗ trợ Validate
+    compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+}
+
+test {
+    useJUnitPlatform()
+}
