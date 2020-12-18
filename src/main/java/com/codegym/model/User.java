@@ -31,7 +31,7 @@ public class User implements Validator {
         String name = user.getName();
         String email = user.getEmail();
         String phone = user.getPhone();
-        Integer age = user.getAge();
+        Integer age = (user.getAge() != null) ? user.getAge() : 0;
         String password = user.getPassword();
 
         ValidationUtils.rejectIfEmpty(errors, "name", "name.empty");
@@ -39,7 +39,7 @@ public class User implements Validator {
             errors.rejectValue("name", "name.length");
         }
         ValidationUtils.rejectIfEmpty(errors, "email", "email.empty");
-        if (!email.matches("^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)$")) {
+        if (!email.matches("^[a-zA-Z][\\w\\.-]+@([\\w]+\\.[\\w]+|[\\w]+\\.[\\w]{2,}\\.[\\w]{2,})$")) {
             errors.rejectValue("email", "email.matches");
         }
         ValidationUtils.rejectIfEmpty(errors, "password", "password.empty");
@@ -50,14 +50,14 @@ public class User implements Validator {
         if (phone.length() > 13 || phone.length() < 10) {
             errors.rejectValue("phone", "phone.length");
         }
-        if (!phone.startsWith("+84") || !phone.startsWith("0")) {
+        if (!phone.startsWith("+84") && !phone.startsWith("0")) {
             errors.rejectValue("phone", "phone.startsWith");
         }
-        if (!phone.matches("^$|[0-9]*$")) {
+        if (!phone.matches("^(\\+\\d{1,2}\\d*)|([0-9]*)$")) {
             errors.rejectValue("phone", "phone.matches", "Phone invalidddddd");
         }
-        ValidationUtils.rejectIfEmpty(errors, "age", "age.empty");
-        if (age < 18) {
+        ValidationUtils.rejectIfEmpty(  errors, "age", "age.empty");
+        if (age > 120 || age < 18) {
             errors.rejectValue("age", "age.length");
         }
     }
