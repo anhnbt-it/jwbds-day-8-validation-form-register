@@ -1,11 +1,16 @@
 package com.codegym.model;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Component
@@ -14,9 +19,14 @@ public class User implements Validator {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty
+    @Size(min = 5, max = 45)
     private String name;
+    @Email
     private String email;
+    @NotEmpty
     private String phone;
+    @NotNull
     private Integer age;
     private String password;
 
@@ -34,19 +44,19 @@ public class User implements Validator {
         Integer age = (user.getAge() != null) ? user.getAge() : 0;
         String password = user.getPassword();
 
-        ValidationUtils.rejectIfEmpty(errors, "name", "name.empty");
-        if (name.length() > 45 || name.length() < 5) {
-            errors.rejectValue("name", "name.length");
-        }
-        ValidationUtils.rejectIfEmpty(errors, "email", "email.empty");
-        if (!email.matches("^[a-zA-Z][\\w\\.-]+@([\\w]+\\.[\\w]+|[\\w]+\\.[\\w]{2,}\\.[\\w]{2,})$")) {
-            errors.rejectValue("email", "email.matches");
-        }
-        ValidationUtils.rejectIfEmpty(errors, "password", "password.empty");
+//        ValidationUtils.rejectIfEmpty(errors, "name", "name.empty");
+//        if (name.length() > 45 || name.length() < 5) {
+//            errors.rejectValue("name", "name.length");
+//        }
+//        ValidationUtils.rejectIfEmpty(errors, "email", "email.empty");
+//        if (!email.matches("^[a-zA-Z][\\w\\.-]+@([\\w]+\\.[\\w]+|[\\w]+\\.[\\w]{2,}\\.[\\w]{2,})$")) {
+//            errors.rejectValue("email", "email.matches");
+//        }
+//        ValidationUtils.rejectIfEmpty(errors, "password", "password.empty");
         if (password.length() > 30 || password.length() < 6) {
             errors.rejectValue("password", "password.length");
         }
-        ValidationUtils.rejectIfEmpty(errors, "phone", "phone.empty");
+//        ValidationUtils.rejectIfEmpty(errors, "phone", "phone.empty");
         if (phone.length() > 13 || phone.length() < 10) {
             errors.rejectValue("phone", "phone.length");
         }
@@ -54,9 +64,9 @@ public class User implements Validator {
             errors.rejectValue("phone", "phone.startsWith");
         }
         if (!phone.matches("^(\\+\\d{1,2}\\d*)|([0-9]*)$")) {
-            errors.rejectValue("phone", "phone.matches", "Phone invalidddddd");
+            errors.rejectValue("phone", "phone.matches");
         }
-        ValidationUtils.rejectIfEmpty(  errors, "age", "age.empty");
+//        ValidationUtils.rejectIfEmpty(  errors, "age", "age.empty");
         if (age > 120 || age < 18) {
             errors.rejectValue("age", "age.length");
         }
